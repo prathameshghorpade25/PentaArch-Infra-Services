@@ -10,54 +10,16 @@ import {
   Compass,
   ArrowRight 
 } from 'lucide-react';
+import { servicesContent } from '@/content/site-data';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 
-const services = [
-  {
-    id: '1',
-    icon: Sofa,
-    title: 'Interior Design',
-    description: 'Transforming spaces with premium materials and thoughtful design that reflects your lifestyle.',
-    features: ['Space Planning', 'Custom Furniture', 'Lighting Design', 'Color Consultation'],
-    image: '/images/services/interior-design.jpg',
-    ctaText: 'Explore Interiors',
-  },
-  {
-    id: '2',
-    icon: Palette,
-    title: 'Decorative Finishes',
-    description: 'Premium wall treatments, textures, and artistic finishes that add character to your space.',
-    features: ['Textured Walls', 'Designer Paints', 'Wall Art', 'Accent Features'],
-    image: '/images/services/decorative-finishes.jpg',
-    ctaText: 'View Finishes',
-  },
-  {
-    id: '3',
-    icon: Layers,
-    title: 'Premium Flooring',
-    description: 'Luxurious flooring solutions from hardwood to marble, engineered for beauty and durability.',
-    features: ['Hardwood Flooring', 'Natural Stone', 'Designer Tiles', 'Sustainable Options'],
-    image: '/images/services/premium-flooring.jpg',
-    ctaText: 'Discover Flooring',
-  },
-  {
-    id: '4',
-    icon: HardHat,
-    title: 'Civil Contracting',
-    description: 'Complete construction services with attention to quality, safety, and timely delivery.',
-    features: ['Project Management', 'Quality Assurance', 'Safety Compliance', 'Timely Delivery'],
-    image: '/images/services/civil-contracting.jpg',
-    ctaText: 'Learn More',
-  },
-  {
-    id: '5',
-    icon: Compass,
-    title: 'Vastu Consultancy',
-    description: 'Ancient wisdom meets modern design to create harmonious and prosperous living spaces.',
-    features: ['Site Analysis', 'Design Alignment', 'Energy Flow', 'Traditional Wisdom'],
-    image: '/images/services/vastu-consultancy.jpg',
-    ctaText: 'Explore Vastu',
-  },
-];
+const serviceIcons = {
+  'interior-design': Sofa,
+  'decorative-finishes': Palette,
+  'premium-flooring': Layers,
+  'civil-contracting': HardHat,
+  'vastu-consultancy': Compass,
+};
 
 const ServicePillars = () => {
   const [ref, inView] = useInView({
@@ -123,8 +85,8 @@ const ServicePillars = () => {
           animate={inView ? 'visible' : 'hidden'}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {services.map((service, index) => {
-            const IconComponent = service.icon;
+          {servicesContent.map((service, index) => {
+            const IconComponent = serviceIcons[service.id as keyof typeof serviceIcons];
             
             return (
               <motion.div
@@ -135,12 +97,12 @@ const ServicePillars = () => {
                 }`}
               >
                 {/* Background Image */}
-                <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
-                  <div
-                    className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${service.image})` }}
-                  />
-                </div>
+                <OptimizedImage
+                  src={service.image}
+                  alt={`${service.title} background`}
+                  fill
+                  className="object-cover"
+                />
 
                 <div className="relative z-10 p-8">
                   {/* Icon */}
@@ -160,22 +122,12 @@ const ServicePillars = () => {
                     {service.description}
                   </p>
 
-                  {/* Features */}
-                  <ul className="space-y-2 mb-8">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center text-sm text-gray-400">
-                        <div className="w-1.5 h-1.5 bg-terracotta rounded-full mr-3" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-
                   {/* CTA Button */}
                   <motion.button
                     className="flex items-center gap-2 text-terracotta font-semibold group-hover:text-white transition-colors duration-300"
                     whileHover={{ x: 5 }}
                   >
-                    {service.ctaText}
+                    Explore More
                     <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
                   </motion.button>
                 </div>

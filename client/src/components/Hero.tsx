@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Calendar, Phone } from 'lucide-react';
-// import ReactPlayer from 'react-player/lazy';
+import { heroContent } from '@/content/site-data';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 
 const Hero = () => {
   const [mounted, setMounted] = useState(false);
@@ -27,11 +28,12 @@ const Hero = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <div 
-          className="w-full h-full bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')`
-          }}
+        <OptimizedImage
+          src="https://res.cloudinary.com/your-cloud-name/image/upload/v1/pentaarch/hero-background.jpg"
+          alt="PentaArch hero background"
+          fill
+          priority
+          className="object-cover"
         />
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-charcoal/70" />
@@ -50,9 +52,11 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
           >
-            <span className="block">Building</span>
-            <span className="gradient-text block">Dreams</span>
-            <span className="block">into Reality</span>
+            {heroContent.heading.split(',').map((part, index) => (
+              <span key={index} className={index === 1 ? "gradient-text block" : "block"}>
+                {part}
+              </span>
+            ))}
           </motion.h1>
 
           <motion.p
@@ -61,8 +65,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            Blending traditional Indian wisdom with contemporary design. 
-            We create premium architectural and interior spaces that reflect your vision.
+            {heroContent.subheading}
           </motion.p>
 
           <motion.div
@@ -77,7 +80,7 @@ const Hero = () => {
               whileTap={{ scale: 0.95 }}
             >
               <Calendar size={20} />
-              Book a Site Visit
+              {heroContent.cta}
             </motion.button>
 
             <motion.button
@@ -88,27 +91,6 @@ const Hero = () => {
               <Phone size={20} />
               Call Now
             </motion.button>
-          </motion.div>
-
-          {/* Stats */}
-          <motion.div
-            className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8 }}
-          >
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-playfair font-bold gradient-text">500+</div>
-              <div className="text-gray-400 text-sm sm:text-base">Projects Completed</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-playfair font-bold gradient-text">15+</div>
-              <div className="text-gray-400 text-sm sm:text-base">Years Experience</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-playfair font-bold gradient-text">100%</div>
-              <div className="text-gray-400 text-sm sm:text-base">Client Satisfaction</div>
-            </div>
           </motion.div>
         </motion.div>
 
